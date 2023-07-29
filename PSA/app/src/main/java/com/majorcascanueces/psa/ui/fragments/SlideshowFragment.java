@@ -1,4 +1,4 @@
-package com.majorcascanueces.psa.ui.slideshow;
+package com.majorcascanueces.psa.ui.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.majorcascanueces.psa.databinding.FragmentSlideshowBinding;
+import com.majorcascanueces.psa.ui.viewmodels.SlideshowViewModel;
 
 public class SlideshowFragment extends Fragment {
 
