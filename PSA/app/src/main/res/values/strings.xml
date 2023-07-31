@@ -8,7 +8,7 @@
     <string name="nav_header_desc">Navigation header</string>
 
     <!-- Descripciones-->
-    <string name="button_googlesigin">Iniciar sesión con google</string>
+    <string name="button_google_sign_in">Iniciar sesión con google</string>
 
     <!-- Diccionario-->
     <string name="menu_home">Inicio</string>
@@ -17,8 +17,8 @@
     <string name="action_settings">Opciones</string>
     <string name="entry_email">Correo electrónico</string>
     <string name="entry_password">Contraseña</string>
-    <string name="button_sigin">Iniciar sesión</string>
-    <string name="siginwith">Iniciar con</string>
+    <string name="button_sign_in">Iniciar sesión</string>
+    <string name="sign_in_with">Iniciar sesión con</string>
 
 
 </resources>
