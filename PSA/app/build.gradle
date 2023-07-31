@@ -3,6 +3,14 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        debug {
+            storeFile file('/home/ubuntu/Escritorio/Code/key-psa.jks')
+            storePassword 'Cascanueces#666'
+            keyAlias 'cascanuecesPSA'
+            keyPassword 'Cascanueces#666'
+        }
+    }
     namespace 'com.majorcascanueces.psa'
     compileSdk 33
 
