@@ -19,6 +19,7 @@
     <string name="entry_password">Contraseña</string>
     <string name="button_sign_in">Iniciar sesión</string>
     <string name="sign_in_with">Iniciar sesión con</string>
+    <string name="button_log_in_">Registrarse</string>
 
 
 </resources>
