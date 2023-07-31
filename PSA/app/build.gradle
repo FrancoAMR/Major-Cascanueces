@@ -5,7 +5,7 @@ plugins {
 android {
     signingConfigs {
         debug {
-            storeFile file('../key-psa.jks')
+            storeFile file('../app/key-psa.jks')
             storePassword 'Cascanueces#666'
             keyAlias 'cascanuecesPSA'
             keyPassword 'Cascanueces#666'
