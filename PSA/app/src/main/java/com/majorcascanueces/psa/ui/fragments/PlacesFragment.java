@@ -10,23 +10,23 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.majorcascanueces.psa.databinding.FragmentGalleryBinding;
-import com.majorcascanueces.psa.ui.viewmodels.GalleryViewModel;
+import com.majorcascanueces.psa.databinding.FragmentPlacesBinding;
+import com.majorcascanueces.psa.ui.viewmodels.PlacesViewModel;
 
-public class GalleryFragment extends Fragment {
+public class PlacesFragment extends Fragment {
 
-    private FragmentGalleryBinding binding;
+    private FragmentPlacesBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        GalleryViewModel galleryViewModel =
-                new ViewModelProvider(this).get(GalleryViewModel.class);
+        PlacesViewModel placesViewModel =
+                new ViewModelProvider(this).get(PlacesViewModel.class);
 
-        binding = FragmentGalleryBinding.inflate(inflater, container, false);
+        binding = FragmentPlacesBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textGallery;
-        galleryViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        final TextView textView = binding.textViewPlaces;
+        placesViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 

@@ -10,23 +10,23 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.majorcascanueces.psa.databinding.FragmentHomeBinding;
-import com.majorcascanueces.psa.ui.viewmodels.HomeViewModel;
+import com.majorcascanueces.psa.databinding.FragmentMapBinding;
+import com.majorcascanueces.psa.ui.viewmodels.MapViewModel;
 
-public class HomeFragment extends Fragment {
+public class MapFragment extends Fragment {
 
-    private FragmentHomeBinding binding;
+    private FragmentMapBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        HomeViewModel homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
+        MapViewModel mapViewModel =
+                new ViewModelProvider(this).get(MapViewModel.class);
 
-        binding = FragmentHomeBinding.inflate(inflater, container, false);
+        binding = FragmentMapBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textHome;
-        homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        final TextView textView = binding.textViewMap;
+        mapViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 

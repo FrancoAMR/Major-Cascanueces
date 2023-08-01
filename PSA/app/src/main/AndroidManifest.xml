@@ -23,15 +23,13 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.activities.SignInActivity">
-        </activity>
-
-        <activity android:name=".ui.activities.LogInActivity">
+        <activity android:name=".ui.activities.AuthActivity"
+            android:theme="@style/Theme.PSA.NoActionBar.FullScreen">
         </activity>
 
         <activity android:name=".ui.activities.AppActivity"
             android:exported="true"
-            android:theme="@style/Theme.PSA.NoActionBar">
+            android:theme="@style/Theme.PSA.NoActionBar.FullScreen.Immersive">
         </activity>
 
     </application>

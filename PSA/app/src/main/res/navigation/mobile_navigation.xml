@@ -3,23 +3,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
+    app:startDestination="@+id/nav_map">
 
     <fragment
-        android:id="@+id/nav_home"
-        android:name="com.majorcascanueces.psa.ui.fragments.HomeFragment"
-        android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
+        android:id="@+id/nav_profile"
+        android:name="com.majorcascanueces.psa.ui.fragments.ProfileFragment"
+        android:label="@string/menu_profile"
+        tools:layout="@layout/fragment_profile" />
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.majorcascanueces.psa.ui.fragments.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        android:id="@+id/nav_places"
+        android:name="com.majorcascanueces.psa.ui.fragments.PlacesFragment"
+        android:label="@string/menu_places"
+        tools:layout="@layout/fragment_places" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.majorcascanueces.psa.ui.fragments.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:id="@+id/nav_map"
+        android:name="com.majorcascanueces.psa.ui.fragments.MapFragment"
+        android:label="@string/menu_map"
+        tools:layout="@layout/fragment_map" />
+
+
+
+
 </navigation>

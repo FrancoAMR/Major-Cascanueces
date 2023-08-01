@@ -1,7 +1,5 @@
 package com.majorcascanueces.psa.data.models;
 
-import java.net.URL;
-
 public class User {
     private final String photoUrl;
     private final String name;
@@ -9,7 +7,6 @@ public class User {
 
     public User (String name, String email, String photo) {
         this.name = name;
-        if (name == null) name = "Username not found";
         this.email = email;
         this.photoUrl = photo;
     }

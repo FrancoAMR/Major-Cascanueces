@@ -3,7 +3,7 @@
     <string name="app_name">PSA</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_title">Invitado</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
 
@@ -11,15 +11,15 @@
     <string name="button_google_sign_in">Iniciar sesión con google</string>
 
     <!-- Diccionario-->
-    <string name="menu_home">Inicio</string>
-    <string name="menu_gallery">Galeria</string>
-    <string name="menu_slideshow">Album</string>
+    <string name="menu_profile">Perfil</string>
+    <string name="menu_map">Mapa</string>
+    <string name="menu_places">Lugares</string>
     <string name="action_settings">Opciones</string>
     <string name="entry_email">Correo electrónico</string>
     <string name="entry_password">Contraseña</string>
     <string name="button_sign_in">Iniciar sesión</string>
     <string name="sign_in_with">Iniciar sesión con</string>
     <string name="button_log_in_">Registrarse</string>
-
+    <string name="button_anonymous">Invitado</string>
 
 </resources>

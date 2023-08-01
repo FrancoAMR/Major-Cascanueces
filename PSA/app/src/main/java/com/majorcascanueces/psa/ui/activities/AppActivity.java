@@ -7,14 +7,9 @@ import android.view.Menu;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
-import androidx.annotation.NonNull;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -24,16 +19,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseUser;
 import com.majorcascanueces.psa.R;
-import com.majorcascanueces.psa.data.models.User;
-import com.majorcascanueces.psa.data.repository.SignInRepository;
 import com.majorcascanueces.psa.databinding.ActivityAppBinding;
-import com.majorcascanueces.psa.di.SignInServices;
+import com.majorcascanueces.psa.di.AuthServices;
 import com.majorcascanueces.psa.task.LoadUrlImage;
 
 public class AppActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityAppBinding binding;
-    private SignInServices sis;
+    private AuthServices as;
     private FirebaseUser user;
 
     @Override
@@ -41,7 +34,10 @@ public class AppActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityAppBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        sis = new SignInServices(this);
+        View decorView = getWindow().getDecorView();
+        int flags = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+        decorView.setSystemUiVisibility(flags);
+        as = new AuthServices(this);
         initWidgetsActions();
         checkSignInStatus();
     }
@@ -67,8 +63,8 @@ public class AppActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "Saliendo", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-                sis.signOut();
-                startActivity(new Intent(AppActivity.this, SignInActivity.class));
+                as.signOut();
+                startActivity(new Intent(AppActivity.this, AuthActivity.class));
                 finish();
             }
         });
@@ -77,7 +73,7 @@ public class AppActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
+                R.id.nav_places, R.id.nav_profile, R.id.nav_map)
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
@@ -86,8 +82,8 @@ public class AppActivity extends AppCompatActivity {
     }
 
     private void checkSignInStatus() {
-        if (!sis.userAlreadyLogged()) {
-            startActivity(new Intent(AppActivity.this, SignInActivity.class));
+        if (!as.userAlreadyLogged()) {
+            startActivity(new Intent(AppActivity.this, AuthActivity.class));
             finish();
         }
         else {
@@ -101,7 +97,7 @@ public class AppActivity extends AppCompatActivity {
         TextView username = hView.findViewById(R.id.textViewUsername);
         TextView email = hView.findViewById(R.id.textViewAddress);
         ImageView photo = hView.findViewById(R.id.imageViewUser);
-        user = sis.getCurrentUser();
+        user = as.getCurrentUser();
         username.setText(user.getDisplayName());
         email.setText(user.getEmail());
         if (user.getPhotoUrl() != null)

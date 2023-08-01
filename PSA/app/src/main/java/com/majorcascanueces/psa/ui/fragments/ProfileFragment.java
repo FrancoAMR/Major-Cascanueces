@@ -10,23 +10,23 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.majorcascanueces.psa.databinding.FragmentSlideshowBinding;
-import com.majorcascanueces.psa.ui.viewmodels.SlideshowViewModel;
+import com.majorcascanueces.psa.databinding.FragmentProfileBinding;
+import com.majorcascanueces.psa.ui.viewmodels.ProfileViewModel;
 
-public class SlideshowFragment extends Fragment {
+public class ProfileFragment extends Fragment {
 
-    private FragmentSlideshowBinding binding;
+    private FragmentProfileBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        SlideshowViewModel slideshowViewModel =
-                new ViewModelProvider(this).get(SlideshowViewModel.class);
+        ProfileViewModel profileViewModel =
+                new ViewModelProvider(this).get(ProfileViewModel.class);
 
-        binding = FragmentSlideshowBinding.inflate(inflater, container, false);
+        binding = FragmentProfileBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textSlideshow;
-        slideshowViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        final TextView textView = binding.textViewProfile;
+        profileViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 

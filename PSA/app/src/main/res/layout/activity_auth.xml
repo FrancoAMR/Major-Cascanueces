@@ -69,15 +69,16 @@
         android:id="@+id/button_log_in"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/rectangle_round"
         android:text="@string/button_log_in_"
         android:textColor="@color/blue_900"
-        android:background="@android:color/transparent"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.697" />
+        app:layout_constraintVertical_bias="0.651" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -101,5 +102,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.893" />
+
+    <Button
+        android:id="@+id/button_log_in_anonymous"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/button_anonymous"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.902"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.969" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

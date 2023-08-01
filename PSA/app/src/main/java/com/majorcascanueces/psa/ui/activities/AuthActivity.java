@@ -1,6 +1,5 @@
 package com.majorcascanueces.psa.ui.activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -8,28 +7,20 @@ import android.view.View;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.Task;
+import com.majorcascanueces.psa.data.repository.AuthRepository;
+import com.majorcascanueces.psa.databinding.ActivityAuthBinding;
+import com.majorcascanueces.psa.di.AuthServices;
 
-import com.google.firebase.auth.FirebaseUser;
-import com.majorcascanueces.psa.data.repository.SignInRepository;
-import com.majorcascanueces.psa.databinding.ActivitySiginBinding;
-import com.majorcascanueces.psa.di.SignInServices;
-
-public class SignInActivity extends AppCompatActivity {
-    private ActivitySiginBinding binding;
-    private SignInServices sis;
+public class AuthActivity extends AppCompatActivity {
+    private ActivityAuthBinding binding;
+    private AuthServices as;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivitySiginBinding.inflate(getLayoutInflater());
+        binding = ActivityAuthBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        sis = new SignInServices(this);
+        as = new AuthServices(this);
         initWidgetsActions();
     }
 
@@ -37,8 +28,8 @@ public class SignInActivity extends AppCompatActivity {
         binding.imageButtonGoogleSignIn.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent googleIntent = sis.initGoogleSignIn();
-                startActivityForResult(googleIntent, SignInServices.googleRequestCode);
+                Intent googleIntent = as.initGoogleSignIn();
+                startActivityForResult(googleIntent, AuthServices.googleRequestCode);
             }
         });
 
@@ -50,15 +41,15 @@ public class SignInActivity extends AppCompatActivity {
                 if (email.isEmpty() || password.isEmpty()) {
                     return;
                 }
-                sis.signInWithEmailAndPassword(email,password,new SignInRepository.OnSignInListener() {
+                as.signInWithEmailAndPassword(email,password,new AuthRepository.OnSignInListener() {
                     @Override
                     public void onSignInComplete() {
-                        startActivity(new Intent(SignInActivity.this, AppActivity.class));
+                        startActivity(new Intent(AuthActivity.this, AppActivity.class));
                         finish();
                     }
                     @Override
                     public void onSignInFailure(String cause) {
-                        showEmailSignInFailure(cause);
+                        showEmailAuthFailure(cause);
                     }
                 });
             }
@@ -67,7 +58,41 @@ public class SignInActivity extends AppCompatActivity {
         binding.buttonLogIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO:franmento para resultado
+                String email = binding.editTextEmail.getText().toString();
+                String password = binding.editTextPassword.getText().toString();
+                if (email.isEmpty() || password.isEmpty()) {
+                    return;
+                }
+                as.logInWithEmailAndPassword(email, password, new AuthRepository.OnLogInListener() {
+                    @Override
+                    public void onLogInComplete() {
+                        startActivity(new Intent(AuthActivity.this, AppActivity.class));
+                        finish();
+                    }
+
+                    @Override
+                    public void onLogInFailure(String cause) {
+                        showEmailAuthFailure(cause);
+                    }
+                });
+            }
+        });
+
+        binding.buttonLogInAnonymous.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                as.signInWithLocalAccount(new AuthRepository.OnSignInListener() {
+                    @Override
+                    public void onSignInComplete() {
+                        startActivity(new Intent(AuthActivity.this, AppActivity.class));
+                        finish();
+                    }
+
+                    @Override
+                    public void onSignInFailure(String cause) {
+
+                    }
+                });
             }
         });
     }
@@ -75,17 +100,17 @@ public class SignInActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode,resultCode,data);
-        if (SignInServices.googleRequestCode == requestCode) {
-            if (sis.receiveGoogleSignIn(data)) {
-                sis.signInWithGoogle(new SignInRepository.OnSignInListener() {
+        if (AuthServices.googleRequestCode == requestCode) {
+            if (as.receiveGoogleSignIn(data)) {
+                as.signInWithGoogle(new AuthRepository.OnSignInListener() {
                     @Override
                     public void onSignInComplete() {
-                        startActivity(new Intent(SignInActivity.this, AppActivity.class));
+                        startActivity(new Intent(AuthActivity.this, AppActivity.class));
                         finish();
                     }
                     @Override
                     public void onSignInFailure(String cause) {
-
+                        showGoogleSigInAlert();
                     }
                 });
             }
@@ -107,7 +132,8 @@ public class SignInActivity extends AppCompatActivity {
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
-    private void showEmailSignInFailure(String cause) {
+
+    private void showEmailAuthFailure(String cause) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Advertencia");
         builder.setMessage(cause);

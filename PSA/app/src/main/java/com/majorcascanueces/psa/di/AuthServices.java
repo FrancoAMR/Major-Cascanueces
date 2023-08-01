@@ -2,10 +2,10 @@ package com.majorcascanueces.psa.di;
 
 import android.content.Context;
 
-import com.majorcascanueces.psa.data.repository.SignInRepositoryImpl;
+import com.majorcascanueces.psa.data.repository.AuthRepositoryImpl;
 
-public class SignInServices extends SignInRepositoryImpl {
-    public SignInServices(Context context) {
+public class AuthServices extends AuthRepositoryImpl {
+    public AuthServices(Context context) {
         super(context);
     }
 
