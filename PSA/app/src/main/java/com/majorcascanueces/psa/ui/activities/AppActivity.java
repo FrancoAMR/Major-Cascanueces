@@ -1,9 +1,6 @@
 package com.majorcascanueces.psa.ui.activities;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
@@ -11,8 +8,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -27,28 +22,28 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseUser;
 import com.majorcascanueces.psa.R;
+import com.majorcascanueces.psa.data.models.User;
+import com.majorcascanueces.psa.data.repository.SignInRepository;
 import com.majorcascanueces.psa.databinding.ActivityAppBinding;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
+import com.majorcascanueces.psa.di.SignInServices;
+import com.majorcascanueces.psa.task.LoadUrlImage;
 
 public class AppActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityAppBinding binding;
-    private GoogleSignInClient gsc;
-    private GoogleSignInOptions gso;
-    private GoogleSignInAccount gsa;
+    private SignInServices sis;
+    private FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityAppBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        sis = new SignInServices(this);
         initWidgetsActions();
-        //TODO:Primero ver si el user inicio con google o con sign in interno
-        initGoogleService();
+        checkSignInStatus();
     }
 
     @Override
@@ -72,7 +67,9 @@ public class AppActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "Saliendo", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-                googleSignOut();
+                sis.signOut();
+                startActivity(new Intent(AppActivity.this, SignInActivity.class));
+                finish();
             }
         });
         DrawerLayout drawer = binding.drawerLayout;
@@ -88,69 +85,29 @@ public class AppActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
     }
 
-    private void initGoogleService() {
-        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
-        gsc = GoogleSignIn.getClient(this, gso);
-        gsa = GoogleSignIn.getLastSignedInAccount(this);
-        if (gsa == null) {
+    private void checkSignInStatus() {
+        if (!sis.userAlreadyLogged()) {
             startActivity(new Intent(AppActivity.this, SignInActivity.class));
             finish();
         }
         else {
-            initGoogleUser();
+            initUserView();
         }
     }
 
-    private void initGoogleUser() {
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+    private void initUserView() {
+        NavigationView navigationView = findViewById(R.id.nav_view);
         View hView =  navigationView.getHeaderView(0);
         TextView username = hView.findViewById(R.id.textViewUsername);
         TextView email = hView.findViewById(R.id.textViewAddress);
-        ImageView user = hView.findViewById(R.id.imageViewUser);
-        username.setText(gsa.getDisplayName());
-        email.setText(gsa.getEmail());
-
-        new LoadProfileImage(user).execute(gsa.getPhotoUrl().toString());
+        ImageView photo = hView.findViewById(R.id.imageViewUser);
+        user = sis.getCurrentUser();
+        username.setText(user.getDisplayName());
+        email.setText(user.getEmail());
+        if (user.getPhotoUrl() != null)
+            new LoadUrlImage(photo).execute(user.getPhotoUrl().toString());
+        else
+            photo.setImageResource(R.mipmap.ic_launcher_round);
     }
 
-    private void googleSignOut() {
-        gsc.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                startActivity(new Intent(AppActivity.this, SignInActivity.class));
-                finish();
-            }
-        });
-    }
-
-    private class LoadProfileImage extends AsyncTask<String, Void, Bitmap> {
-        private ImageView imageView;
-
-        public LoadProfileImage(ImageView imageView) {
-            this.imageView = imageView;
-        }
-
-        @Override
-        protected Bitmap doInBackground(String... urls) {
-            String url = urls[0];
-            Bitmap bitmap = null;
-            try {
-                InputStream inputStream = new URL(url).openStream();
-                bitmap = BitmapFactory.decodeStream(inputStream);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return bitmap;
-        }
-
-        @Override
-        protected void onPostExecute(Bitmap result) {
-            if (result != null) {
-                imageView.setImageBitmap(result);
-            } else {
-                // Si la imagen no se pudo cargar, puedes establecer una imagen de respaldo o dejar el ImageView vacío.
-                imageView.setImageResource(R.mipmap.ic_launcher_round);
-            }
-        }
-    }
 }
