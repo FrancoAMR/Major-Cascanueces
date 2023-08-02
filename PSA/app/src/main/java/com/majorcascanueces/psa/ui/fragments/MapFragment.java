@@ -1,7 +1,9 @@
 package com.majorcascanueces.psa.ui.fragments;
 
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +21,9 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.GroundOverlayOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.MapStyleOptions;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.majorcascanueces.psa.databinding.FragmentMapBinding;
 import com.majorcascanueces.psa.ui.viewmodels.MapViewModel;
@@ -48,25 +53,29 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     public void onResume() {
         super.onResume();
-        mapView.onResume();
+        if (mapView!=null)
+            mapView.onResume();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        mapView.onPause();
+        if (mapView!=null)
+            mapView.onPause();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mapView.onDestroy();
+        if (mapView!=null)
+            mapView.onDestroy();
     }
 
     @Override
     public void onLowMemory() {
         super.onLowMemory();
-        mapView.onLowMemory();
+        if (mapView!=null)
+            mapView.onLowMemory();
     }
 
     @Override
@@ -79,29 +88,50 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     public void onMapReady(@NonNull GoogleMap map) {
         googleMap = map;
 
-        //googleMap.clear();
+        try {
+            // Customise the styling of the base map using a JSON object defined
+            // in a raw resource file.
+            boolean success = googleMap.setMapStyle(
+                    MapStyleOptions.loadRawResourceStyle(
+                            this.getContext(), R.raw.map_style));
+
+            if (!success) {
+                Log.e(this.getTag(), "Style parsing failed.");
+            }
+        } catch (Resources.NotFoundException e) {
+            Log.e(this.getTag(), "Can't find style. Error: ", e);
+        }
+
         LatLngBounds imageBounds = new LatLngBounds(
-                new LatLng(-75.5, -1),
-                new LatLng(-75.0, 1)
+                new LatLng(-12.053675, -77.0866083333), //SW
+                new LatLng(-12.0524638889, -77.0843611111) //NE
         );
 
         GroundOverlayOptions groundOverlayOptions = new GroundOverlayOptions()
                 .image(BitmapDescriptorFactory.fromResource(R.drawable.piso1))
                 .positionFromBounds(imageBounds);
-
         googleMap.addGroundOverlay(groundOverlayOptions);
 
-        LatLngBounds quad = new LatLngBounds(
-                new LatLng(-75.5, -0.5),
-                new LatLng(-75.0, 0.5)
+
+
+        LatLngBounds bounds = new LatLngBounds(
+                new LatLng(-12.053675, -77.0866083333), //SW
+                new LatLng(-12.0524638889, -77.0843611111) //NE
         );
 
-        googleMap.setLatLngBoundsForCameraTarget(quad);
-
+        googleMap.setLatLngBoundsForCameraTarget(bounds);
+        googleMap.setMinZoomPreference(18.5f);
         float tilt = 45.0f;
         float bearing = 0f;
-        LatLng location = new LatLng(-75.25,0);
-        float zoomLevel = 5f;
+        LatLng location = new LatLng(-12.05306,-77.08545);
+        float zoomLevel = 19.5f;
+
+        googleMap.addMarker(new MarkerOptions()
+                .position(location)
+                .title("Max se la come"));
+
+        googleMap.setBuildingsEnabled(false);
+
         googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(
                 new CameraPosition.Builder()
                         .target(location)
@@ -110,13 +140,16 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                         .bearing(bearing)
                         .build()));
 
-        PolylineOptions polylineOptions = new PolylineOptions()
-                .add(new LatLng(-75.5, -0.5))
-                .add(new LatLng(-75.25, 0))
-                .add(new LatLng(-75, 0.5))
+        /*PolylineOptions polylineOptions = new PolylineOptions()
                 .width(10)
-                .color(Color.RED);
+                .add(new LatLng(-75.5, -0.5))
+                .color(Color.RED)
+                .add(new LatLng(-75.25, 0))
+                .color(Color.BLUE)
+                .add(new LatLng(-75, 0.5)
+        );
 
-        googleMap.addPolyline(polylineOptions);
+        googleMap.addPolyline(polylineOptions);*/
+        //PolygonOptions polygonOptions = new PolygonOptions().clickable(true);
     }
 }
