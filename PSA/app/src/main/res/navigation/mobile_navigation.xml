@@ -23,7 +23,4 @@
         android:label="@string/menu_map"
         tools:layout="@layout/fragment_map" />
 
-
-
-
 </navigation>
