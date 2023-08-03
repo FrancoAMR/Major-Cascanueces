@@ -6,9 +6,11 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -18,15 +20,18 @@ import com.google.android.gms.maps.model.GroundOverlayOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MapStyleOptions;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.model.PolygonOptions;
 
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.majorcascanueces.psa.R;
 import com.majorcascanueces.psa.data.models.GeoPoint;
 import com.majorcascanueces.psa.data.models.GraphHelper;
 
 import org.jgrapht.Graph;
+import org.jgrapht.GraphPath;
 import org.jgrapht.graph.DefaultWeightedEdge;
 
 public class MapRepositoryImpl implements MapRepository{
@@ -166,13 +171,26 @@ public class MapRepositoryImpl implements MapRepository{
     private void showMarkersFloorOne() {
         if (floor1_graph == null)
             return;
+        doPath(GraphHelper.geoPoint(floor1_graph.vertexSet(),"Puerta 1"),
+                GraphHelper.geoPoint(floor1_graph.vertexSet(),"Puerta 3"));
         for (GeoPoint gp : floor1_graph.vertexSet()) {
-            //if (gp.label.startsWith("p"))
-                //continue;
+            if (gp.label.startsWith("p"))
+                continue;
             googleMap.addMarker(new MarkerOptions()
                     .position(new LatLng(gp.latitude,gp.longitude))
                     .title(gp.label));
         }
+    }
+
+    private void doPath(GeoPoint start, GeoPoint end) {
+        GraphPath<GeoPoint, DefaultWeightedEdge> path = GraphHelper.dijkstra(floor1_graph, start, end);
+        PolylineOptions po = new PolylineOptions();
+        for (GeoPoint gp : path.getVertexList()) {
+            po.add(new LatLng(gp.latitude,gp.longitude));
+        }
+        po.width(8f)
+        .color(Color.BLUE);
+        googleMap.addPolyline(po);
     }
 
     public void setOnClickBuildingListener(OnClickBuildingListener listener) {
