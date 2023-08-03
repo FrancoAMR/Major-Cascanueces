@@ -19,5 +19,15 @@ public class MainActivity extends AppCompatActivity {
         else
             startActivity(new Intent(MainActivity.this, AuthActivity.class));
         finish();
+
+        //DijkstraHelper<String> dijkstraHelper = new DijkstraHelper<>();
+        //SimpleDirectedWeightedGraph<String, DefaultWeightedEdge> graph =
+          //      dijkstraHelper.loadGraphFromJSONResource(getResources().openRawResource(R.raw.graph));
+
+        // Aquí puedes manejar la interacción del usuario para ingresar los nodos de inicio y destino
+        String startNode = "1"; // Obtén el nodo de inicio del usuario
+        String endNode = "18 (Salon)"; // Obtén el nodo de destino del usuario
+
+        //dijkstraHelper.dijkstra(graph, startNode, endNode);
     }
 }
