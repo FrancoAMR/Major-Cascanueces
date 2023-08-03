@@ -17,9 +17,6 @@ import com.majorcascanueces.psa.R;
 
 
 public class AuthRepositoryImpl implements AuthRepository {
-
-    private final String localUserFilename = "LocalUser.txt";
-    private final String emailUserFilename = "EmailUser.txt";
     public static final int googleRequestCode = 1000;
     private GoogleSignInOptions gso;
     private GoogleSignInClient gsc;
