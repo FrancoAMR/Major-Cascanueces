@@ -1,10 +1,13 @@
 package com.majorcascanueces.psa.data.repository;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -17,6 +20,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polygon;
+import com.google.android.gms.maps.model.PolygonOptions;
 import com.majorcascanueces.psa.R;
 
 public class MapRepositoryImpl implements MapRepository{
@@ -109,13 +114,41 @@ public class MapRepositoryImpl implements MapRepository{
 
     @Override
     public void setFloor(int to) {
+        if(current_floor == FLOOR_1)
+            ShowBuildingFloorOne();
         if (current_floor == to)
             return;
         current_floor = to;
         googleMap.clear();
         saveInstanceState();
         setMapSavedInstance();
-    }
 
+    }
+    private void ShowBuildingFloorOne(){
+
+        PolygonOptions aulasPrimerPiso = new PolygonOptions()
+                .add(new LatLng(-12.0534875,-77.0856905))//Abajo Izquierda
+                .add(new LatLng(-12.0534298,-77.0852658))//Abajo Derecha
+                .add(new LatLng(-12.0533543,-77.0852734))//Arriba Derecha
+                .add(new LatLng(-12.0534111,-77.0856998))//Arriba Izquierda
+                .strokeWidth(0)
+                .fillColor(0);
+        Polygon polygon = googleMap.addPolygon(aulasPrimerPiso);
+        polygon.setClickable(true);
+        polygon.setTag("alpha");
+        googleMap.setOnPolygonClickListener(new GoogleMap.OnPolygonClickListener() {
+            @Override
+            public void onPolygonClick(Polygon polygon) {
+                if(polygon.getTag().equals("alpha")){
+                    Toast.makeText((Activity)context, "Aulas Primer Piso", Toast.LENGTH_SHORT).show();
+                    polygon.setFillColor(Color.rgb(116, 155, 194));
+                    polygon.setTag("beta");
+                }else{
+                    polygon.setFillColor(0);
+                    polygon.setTag("alpha");
+                }
+            }
+        });
+    }
 
 }
