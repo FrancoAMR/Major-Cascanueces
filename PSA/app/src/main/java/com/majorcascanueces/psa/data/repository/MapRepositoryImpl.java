@@ -167,6 +167,8 @@ public class MapRepositoryImpl implements MapRepository{
         if (floor1_graph == null)
             return;
         for (GeoPoint gp : floor1_graph.vertexSet()) {
+            //if (gp.label.startsWith("p"))
+                //continue;
             googleMap.addMarker(new MarkerOptions()
                     .position(new LatLng(gp.latitude,gp.longitude))
                     .title(gp.label));

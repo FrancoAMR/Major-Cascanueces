@@ -20,7 +20,7 @@
 
     {
       "label": "Modulo de Atención",
-      "latitud": -12.0535444444,
+      "latitud": -12.0535194444,
       "longitud": -77.0857444444
     },
 
@@ -111,7 +111,7 @@
     {
       "label": "Biblioteca",
       "latitud": -12.0533277778,
-      "longitud": -12.0533277778
+      "longitud": -77.0851972222
     },
 
     {
@@ -157,7 +157,7 @@
     },
 
     {
-      "label": "Auditorios",
+      "label": "Auditorio 1",
       "latitud": -12.0531222222,
       "longitud": -77.0858583333
     },
@@ -175,8 +175,8 @@
     },
 
     {
-      "label": "Auditorios",
-      "latitud": -12.0531750000,
+      "label": "Auditorio 2",
+      "latitud": -12.0530250000,
       "longitud": -77.0857055556
     },
 
@@ -314,7 +314,7 @@
 
     {
       "label": "Gradas",
-      "latitud": -12.0529944444,
+      "latitud": -12.0530222222,
       "longitud": -77.0852805556
     },
 
