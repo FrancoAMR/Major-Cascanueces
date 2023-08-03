@@ -486,13 +486,13 @@
       "source": "pv9",
       "target": "pv10",
       "weight": 528
-    }
+    },
 
     {
       "source": "pv10",
       "target": "pv11",
       "weight": 392
-    }
+    },
 
     {
       "source": "pv11",
@@ -660,7 +660,7 @@
       "source": "pe29",
       "target": "Puerta 3",
       "weight": 1149
-    }
+    },
 
     {
       "source": "pn18",
