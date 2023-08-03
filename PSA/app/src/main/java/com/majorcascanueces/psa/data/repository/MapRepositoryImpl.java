@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -22,18 +21,28 @@ import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.model.PolygonOptions;
+
 import com.majorcascanueces.psa.R;
+import com.majorcascanueces.psa.data.models.GeoPoint;
+import com.majorcascanueces.psa.data.models.GraphHelper;
+
+import org.jgrapht.Graph;
+import org.jgrapht.graph.DefaultWeightedEdge;
 
 public class MapRepositoryImpl implements MapRepository{
     private final GoogleMap googleMap;
     private final Context context;
     private static final String cPref = "CameraPref";
     private static final String fPref = "FloorPref";
-    private  int current_floor = FLOOR_1;
+    private int current_floor = FLOOR_1;
+    private OnClickBuildingListener innerListener;
+    private Graph<GeoPoint, DefaultWeightedEdge> floor1_graph;
+
 
     public MapRepositoryImpl(@NonNull Context context,@NonNull GoogleMap map) {
         this.context = context;
         this.googleMap = map;
+        floor1_graph = GraphHelper.loadGraph(context.getResources().openRawResource(R.raw.floor1_graph));
     }
 
     @Override
@@ -84,23 +93,31 @@ public class MapRepositoryImpl implements MapRepository{
         return R.drawable.piso1;
     }
 
-    @Override
-    public void setMapSavedInstance() {
-        SharedPreferences cameraPref = context.getSharedPreferences(cPref, Context.MODE_PRIVATE);
-        SharedPreferences floorPref = context.getSharedPreferences(fPref,Context.MODE_PRIVATE);
-
+    private void setObjects(int floor) {
+        googleMap.clear();
         LatLngBounds imageBounds = new LatLngBounds(
                 new LatLng(-12.053675, -77.0866083333), //SW
                 new LatLng(-12.0524638889, -77.0843611111) //NE
         );
-
         GroundOverlayOptions groundOverlayOptions = new GroundOverlayOptions()
                 .image(BitmapDescriptorFactory.fromResource(
-                        getFloorDrawable(floorPref.getInt("floor",FLOOR_1))))
+                        getFloorDrawable(floor)))
                 .positionFromBounds(imageBounds);
         googleMap.addGroundOverlay(groundOverlayOptions);
 
+        if (floor == FLOOR_1) {
+            showBuildingFloorOne();
+            showMarkersFloorOne();
+        }
+    }
+
+    @Override
+    public void setMapSavedInstance() {
+        SharedPreferences cameraPref = context.getSharedPreferences(cPref, Context.MODE_PRIVATE);
+        SharedPreferences floorPref = context.getSharedPreferences(fPref,Context.MODE_PRIVATE);
         googleMap.setBuildingsEnabled(false);
+
+        setObjects(floorPref.getInt("floor",FLOOR_1));
 
         googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(
                 new CameraPosition.Builder()
@@ -114,18 +131,13 @@ public class MapRepositoryImpl implements MapRepository{
 
     @Override
     public void setFloor(int to) {
-        if(current_floor == FLOOR_1)
-            ShowBuildingFloorOne();
         if (current_floor == to)
             return;
         current_floor = to;
-        googleMap.clear();
-        saveInstanceState();
-        setMapSavedInstance();
-
+        setObjects(current_floor);
     }
-    private void ShowBuildingFloorOne(){
 
+    private void showBuildingFloorOne(){
         PolygonOptions aulasPrimerPiso = new PolygonOptions()
                 .add(new LatLng(-12.0534875,-77.0856905))//Abajo Izquierda
                 .add(new LatLng(-12.0534298,-77.0852658))//Abajo Derecha
@@ -149,6 +161,24 @@ public class MapRepositoryImpl implements MapRepository{
                 }
             }
         });
+    }
+
+    private void showMarkersFloorOne() {
+        if (floor1_graph == null)
+            return;
+        for (GeoPoint gp : floor1_graph.vertexSet()) {
+            googleMap.addMarker(new MarkerOptions()
+                    .position(new LatLng(gp.latitude,gp.longitude))
+                    .title(gp.label));
+        }
+    }
+
+    public void setOnClickBuildingListener(OnClickBuildingListener listener) {
+        innerListener = listener;
+    }
+
+    public interface OnClickBuildingListener {
+        void onClick();
     }
 
 }

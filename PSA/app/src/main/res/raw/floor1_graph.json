@@ -313,7 +313,7 @@
     },
 
     {
-      "label": "Grada",
+      "label": "Gradas",
       "latitud": -12.0529944444,
       "longitud": -77.0852805556
     },
@@ -328,6 +328,24 @@
       "label": "pe29",
       "latitud": -12.0531444444,
       "longitud": -77.0851194444
+    },
+
+    {
+      "label":"Puerta 3",
+      "latitud":-12.0531833333,
+      "longitud":-77.0850222222
+    },
+
+    {
+      "label":"Vestidores",
+      "latitud":-12.0531277778,
+      "longitud":-77.0851222222
+    },
+
+    {
+      "label":"Capilla",
+      "latitud":-12.0531750000,
+      "longitud":-77.0853027778
     }
   ],
 

@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(MainActivity.this, AuthActivity.class));
         finish();
 
-        //DijkstraHelper<String> dijkstraHelper = new DijkstraHelper<>();
+        //GraphHelper<String> dijkstraHelper = new GraphHelper<>();
         //SimpleDirectedWeightedGraph<String, DefaultWeightedEdge> graph =
           //      dijkstraHelper.loadGraphFromJSONResource(getResources().openRawResource(R.raw.graph));
 

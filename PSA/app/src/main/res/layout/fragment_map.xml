@@ -33,6 +33,7 @@
             android:layout_height="@dimen/button_level_width"
             android:layout_margin="@dimen/button_level_padding"
             android:background="@drawable/circle"
+            android:textColor="@color/black"
             android:text="N1" />
 
         <Button
@@ -41,6 +42,7 @@
             android:layout_height="@dimen/button_level_width"
             android:layout_margin="@dimen/button_level_padding"
             android:background="@drawable/circle"
+            android:textColor="@color/black"
             android:text="N2" />
 
         <Button
@@ -49,6 +51,7 @@
             android:layout_height="@dimen/button_level_width"
             android:layout_margin="@dimen/button_level_padding"
             android:background="@drawable/circle"
+            android:textColor="@color/black"
             android:text="N3" />
     </LinearLayout>
 
