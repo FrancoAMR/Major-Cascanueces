@@ -37,7 +37,7 @@
     },
 
     {
-      "label": "Cerceu",
+      "label": "Cerseu",
       "latitud": -12.0534666667,
       "longitud": -77.0857722222
     },
@@ -351,15 +351,357 @@
 
   "edge": [
     {
-      "source": "puerta 1",
-      "target": "p1",
-      "weight": 2
+      "source": "Puerta 1",
+      "target": "pv1",
+      "weight": 523
     },
 
     {
-      "source": "puerta 2",
-      "target": "p1",
-      "weight": 3
+      "source": "pv1",
+      "target": "Modulo de Atención",
+      "weight": 218
+    },
+
+    {
+      "source": "pv1",
+      "target": "Economía",
+      "weight": 435
+    },
+
+    {
+      "source": "pv1",
+      "target": "pv2",
+      "weight": 304
+    },
+
+    {
+      "source": "pv2",
+      "target": "DGA",
+      "weight": 426
+    },
+
+    {
+      "source": "pv2",
+      "target": "Cerseu",
+      "weight": 259
+    },
+
+    {
+      "source": "pv2",
+      "target": "pv3",
+      "weight": 524
+    },
+
+    {
+      "source": "pv3",
+      "target": "Escalera 1",
+      "weight": 265
+    },
+
+    {
+      "source": "pv3",
+      "target": "pv4",
+      "weight": 961
+    },
+
+    {
+      "source": "pv4",
+      "target": "Dirección de Escuela",
+      "weight": 337
+    },
+
+    {
+      "source": "pv4",
+      "target": "pv5",
+      "weight": 2639
+    },
+
+    {
+      "source": "pv5",
+      "target": "Salones 100",
+      "weight": 173
+    },
+
+    {
+      "source": "pv5",
+      "target": "pv6",
+      "weight": 2498
+    },
+
+    {
+      "source": "pv6",
+      "target": "pv7",
+      "weight": 376
+    },
+
+    {
+      "source": "pv7",
+      "target": "Biblioteca",
+      "weight": 368
+    },
+
+    {
+      "source": "pv6",
+      "target": "Puerta 2",
+      "weight": 945
+    },
+
+    {
+      "source": "pv7",
+      "target": "Librería",
+      "weight": 955
+    },
+
+    {
+      "source": "pv7",
+      "target": "Escalera 2",
+      "weight": 971
+    },
+
+    {
+      "source": "pv4",
+      "target": "pv8",
+      "weight": 1392
+    },
+
+    {
+      "source": "pv8",
+      "target": "Escalera 3",
+      "weight": 304
+    },
+
+    {
+      "source": "pv8",
+      "target": "pv9",
+      "weight": 553
+    },
+
+    {
+      "source": "pv9",
+      "target": "Baño 1",
+      "weight": 350
+    },
+
+    {
+      "source": "pv9",
+      "target": "pv10",
+      "weight": 528
+    }
+
+    {
+      "source": "pv10",
+      "target": "pv11",
+      "weight": 392
+    }
+
+    {
+      "source": "pv11",
+      "target": "pv12",
+      "weight": 897
+    },
+
+    {
+      "source": "pv12",
+      "target": "Auditorio 1",
+      "weight": 246
+    },
+
+    {
+      "source": "pv11",
+      "target": "pv13",
+      "weight": 1027
+    },
+
+    {
+      "source": "pv13",
+      "target": "pv14",
+      "weight": 1167
+    },
+
+    {
+      "source": "pv14",
+      "target": "Auditorio 2",
+      "weight": 216
+    },
+
+    {
+      "source": "pv14",
+      "target": "pv15",
+      "weight": 1655
+    },
+
+    {
+      "source": "pv15",
+      "target": "Jardines",
+      "weight": 1130
+    },
+
+    {
+      "source": "Jardines",
+      "target": "Puerta 4",
+      "weight": 1322
+    },
+
+    {
+      "source": "pv15",
+      "target": "pn16",
+      "weight": 1505
+    },
+
+    {
+      "source": "pn16",
+      "target": "pn17",
+      "weight": 1306
+    },
+
+    {
+      "source": "pn17",
+      "target": "Salones 1 NP-100",
+      "weight": 154
+    },
+
+    {
+      "source": "pn16",
+      "target": "pn18",
+      "weight": 371
+    },
+
+    {
+      "source": "pn18",
+      "target": "Escalera 4",
+      "weight": 394
+    },
+
+    {
+      "source": "pn18",
+      "target": "pn19",
+      "weight": 798
+    },
+
+    {
+      "source": "pn19",
+      "target": "Baño 2",
+      "weight": 172
+    },
+
+    {
+      "source": "pn19",
+      "target": "pn20",
+      "weight": 701
+    },
+
+    {
+      "source": "pn20",
+      "target": "Salones 2 NP-100",
+      "weight": 162
+    },
+
+    {
+      "source": "pn20",
+      "target": "pn21",
+      "weight": 1946
+    },
+
+    {
+      "source": "pn21",
+      "target": "Escalera 5",
+      "weight": 272
+    },
+
+    {
+      "source": "pn21",
+      "target": "pe27",
+      "weight": 3362
+    },
+
+    {
+      "source": "pe27",
+      "target": "Canchita",
+      "weight": 384
+    },
+
+    {
+      "source": "pe27",
+      "target": "pe26",
+      "weight": 347
+    },
+
+    {
+      "source": "pe26",
+      "target": "Gradas",
+      "weight": 488
+    },
+
+    {
+      "source": "pe26",
+      "target": "pe28",
+      "weight": 1414
+    },
+
+    {
+      "source": "pe28",
+      "target": "Capilla",
+      "weight": 158
+    },
+
+    {
+      "source": "pe28",
+      "target": "pe29",
+      "weight": 2033
+    },
+
+    {
+      "source": "pe29",
+      "target": "Vestidores",
+      "weight": 148
+    },
+
+    {
+      "source": "pe29",
+      "target": "Puerta 3",
+      "weight": 1149
+    }
+
+    {
+      "source": "pn18",
+      "target": "pe22",
+      "weight": 1299
+    },
+
+    {
+      "source": "pe22",
+      "target": "pe23",
+      "weight": 2593
+    },
+
+    {
+      "source": "pe23",
+      "target": "pe26",
+      "weight": 2464
+    },
+
+    {
+      "source": "pe23",
+      "target": "pe24",
+      "weight": 988
+    },
+
+    {
+      "source": "pe24",
+      "target": "pe25",
+      "weight": 914
+    },
+
+    {
+      "source": "pe25",
+      "target": "Rampa",
+      "weight": 581
+    },
+
+    {
+      "source": "pe25",
+      "target": "pv9",
+      "weight": 1888
     }
   ]
 }
