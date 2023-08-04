@@ -106,4 +106,6 @@ public class AppActivity extends AppCompatActivity {
             photo.setImageResource(R.mipmap.ic_launcher_round);
     }
 
+
+
 }
