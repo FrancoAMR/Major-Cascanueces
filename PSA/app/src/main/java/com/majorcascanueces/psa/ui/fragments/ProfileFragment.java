@@ -1,5 +1,6 @@
 package com.majorcascanueces.psa.ui.fragments;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.renderscript.RSDriverException;
@@ -35,7 +36,12 @@ public class ProfileFragment extends Fragment {
 
         binding = FragmentPerfilBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-
+         binding.button.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+                 regresarAuthActivity();
+             }
+         });
         //final TextView textView = binding.textViewProfile;
         //profileViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
@@ -63,8 +69,9 @@ public class ProfileFragment extends Fragment {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         // Iniciar la actividad AuthActivity
         startActivity(intent);
+        as.signOut();
         // Finalizar la actividad actual para que no se pueda regresar a ella presionando el botón de retroceso
-        getActivity().finish();
+        ((Activity)getContext()).finish();
     }
 
 }
