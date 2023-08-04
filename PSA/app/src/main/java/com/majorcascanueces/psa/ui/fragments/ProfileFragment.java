@@ -14,15 +14,17 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.majorcascanueces.psa.R;
 import com.majorcascanueces.psa.databinding.FragmentPerfilBinding;
 import com.majorcascanueces.psa.di.AuthServices;
+import com.majorcascanueces.psa.task.LoadUrlImage;
 import com.majorcascanueces.psa.ui.activities.AuthActivity;
 import com.majorcascanueces.psa.ui.viewmodels.ProfileViewModel;
 
 
 public class ProfileFragment extends Fragment {
     private TextView emailTextView, nameTextView;
-    //private ImageView profileImageView;
+    private ImageView profileImageView;
     //Vincula lo del layout (widget) a tu actividad
     private FragmentPerfilBinding binding;
     private AuthServices as;
@@ -58,8 +60,14 @@ public class ProfileFragment extends Fragment {
     }
 
     public void mostrarPerfil(){
+
         binding.emailTextView.setText(as.getCurrentUser().getEmail());
         binding.nameTextView.setText(as.getCurrentUser().getDisplayName());
+        if (as.getCurrentUser().getPhotoUrl() != null)
+            new LoadUrlImage(binding.profileImageView).execute(as.getCurrentUser().getPhotoUrl().toString());
+        else
+            binding.profileImageView.setImageResource(R.mipmap.ic_launcher_round);
+
     }
 
     public void regresarAuthActivity() {
