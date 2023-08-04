@@ -12,4 +12,5 @@ public class MapServices extends MapRepositoryImpl {
     public MapServices(@NonNull Context context, @NonNull GoogleMap map) {
         super(context, map);
     }
+
 }

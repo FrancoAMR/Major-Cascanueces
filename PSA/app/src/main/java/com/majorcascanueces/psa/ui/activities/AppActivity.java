@@ -34,9 +34,6 @@ public class AppActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityAppBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        View decorView = getWindow().getDecorView();
-        int flags = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
-        decorView.setSystemUiVisibility(flags);
         as = new AuthServices(this);
         initWidgetsActions();
         checkSignInStatus();

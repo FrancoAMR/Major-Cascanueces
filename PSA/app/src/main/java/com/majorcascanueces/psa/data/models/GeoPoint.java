@@ -14,6 +14,12 @@ public class GeoPoint {
         this.longitude = longitude;
     }
 
+    public GeoPoint(String label) {
+        this.label = label;
+        this.latitude = 0;
+        this.longitude = 0;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

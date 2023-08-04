@@ -14,6 +14,7 @@ import org.jgrapht.graph.SimpleWeightedGraph;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Set;
 
 
@@ -21,7 +22,6 @@ public class GraphHelper {
 
     public static Graph<GeoPoint, DefaultWeightedEdge> loadGraph(InputStream file) {
         try {
-
             JsonElement jsonElement = JsonParser.parseReader(new InputStreamReader(file));
             JsonObject jsonObject = jsonElement.getAsJsonObject();
             JsonArray vertex = jsonObject.get("vertex").getAsJsonArray();
@@ -59,7 +59,6 @@ public class GraphHelper {
             if (gp.label.equals(label))
                 return gp;
         }
-        System.out.println("Neverrr mindddddddddddddddddddddddddddddddddddddddd");
         return null;
     }
 
@@ -68,6 +67,26 @@ public class GraphHelper {
                 new DijkstraShortestPath<>(graph).getPaths(source);
 
         return paths.getPath(destination);
+    }
+
+    public static String[] getOptions(InputStream file) {
+        try {
+            JsonElement jsonElement = JsonParser.parseReader(new InputStreamReader(file));
+            JsonObject jsonObject = jsonElement.getAsJsonObject();
+            JsonArray options = jsonObject.get("list_option").getAsJsonArray();
+            ArrayList<String> optList = new ArrayList<>();
+            String opt;
+            for (JsonElement geoPoint : options) {
+                opt = geoPoint.getAsString();
+                if (opt.startsWith("p"))
+                    continue;
+                optList.add(opt);
+            }
+            return optList.toArray(new String[0]);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /*
