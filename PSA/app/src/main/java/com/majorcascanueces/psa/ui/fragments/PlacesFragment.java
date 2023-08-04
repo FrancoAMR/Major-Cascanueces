@@ -46,9 +46,13 @@ public class PlacesFragment extends Fragment {
 
     private List<Place> generateSamplePlaces() {
         List<Place> samplePlaces = new ArrayList<>();
-        samplePlaces.add(new Place(R.drawable.google_logo, "Lugar 1", "Descripción del lugar 1"));
-        samplePlaces.add(new Place(R.drawable.ic_menu_gallery, "Lugar 2", "Descripción del lugar 2"));
-        // Agrega más lugares aquí
+        samplePlaces.add(new Place(R.drawable.salones_100, "salones_100", "Salones 100"));
+        samplePlaces.add(new Place(R.drawable.salones_np_100, "salones_NP-100", "Salones NP-100"));
+        samplePlaces.add(new Place(R.drawable.laboratorio, "Laboratorio", "Laboratorio"));
+        samplePlaces.add(new Place(R.drawable.patio, "Patio", "Patio de la facultad"));
+        samplePlaces.add(new Place(R.drawable.canchita, "Canchita", "Canchita"));
+        samplePlaces.add(new Place(R.drawable.puerta_1, "Puerta 1", "Puerta 1"));
+
         return samplePlaces;
     }
 }
