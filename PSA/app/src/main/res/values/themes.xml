@@ -22,13 +22,6 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="Theme.PSA.NoActionBar.FullScreen" >
-        <item name="android:windowFullscreen">true</item>
-    </style>
-
-    <style name="Theme.PSA.NoActionBar.FullScreen.Immersive" >
-    </style>
-
     <style name="Theme.PSA.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.PSA.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />

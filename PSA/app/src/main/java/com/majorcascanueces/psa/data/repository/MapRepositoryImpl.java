@@ -34,6 +34,8 @@ import org.jgrapht.Graph;
 import org.jgrapht.GraphPath;
 import org.jgrapht.graph.DefaultWeightedEdge;
 
+import java.util.Set;
+
 public class MapRepositoryImpl implements MapRepository{
     private final GoogleMap googleMap;
     private final Context context;
@@ -171,8 +173,6 @@ public class MapRepositoryImpl implements MapRepository{
     private void showMarkersFloorOne() {
         if (floor1_graph == null)
             return;
-        doPath(GraphHelper.geoPoint(floor1_graph.vertexSet(),"Puerta 1"),
-                GraphHelper.geoPoint(floor1_graph.vertexSet(),"Puerta 3"));
         for (GeoPoint gp : floor1_graph.vertexSet()) {
             if (gp.label.startsWith("p"))
                 continue;
@@ -180,6 +180,24 @@ public class MapRepositoryImpl implements MapRepository{
                     .position(new LatLng(gp.latitude,gp.longitude))
                     .title(gp.label));
         }
+    }
+
+    public void doPath(String start, String end, OnPathListener listener) {
+        if (start == null || end == null) {
+            listener.onFail("Lamentablemente, no se logró realizar una búsqueda satisfactoria.");
+            return;
+        }
+        if (start.equals(end)) {
+            listener.onFail("Ya se encuentra en el lugar de destino");
+            return;
+        }
+        if (!floor1_graph.vertexSet().contains(new GeoPoint(start)) ||
+             !floor1_graph.vertexSet().contains(new GeoPoint(end))) {
+            listener.onFail("Lamentablemente, no se encontraron lugares destacados con el nombre proporcionado.");
+            return;
+        }
+        doPath(GraphHelper.geoPoint(floor1_graph.vertexSet(),start),
+                GraphHelper.geoPoint(floor1_graph.vertexSet(),end));
     }
 
     private void doPath(GeoPoint start, GeoPoint end) {
@@ -199,6 +217,11 @@ public class MapRepositoryImpl implements MapRepository{
 
     public interface OnClickBuildingListener {
         void onClick();
+    }
+
+    public interface OnPathListener {
+        void successful();
+        void onFail(String cause);
     }
 
 }

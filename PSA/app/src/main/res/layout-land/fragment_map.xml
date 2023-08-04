@@ -11,11 +11,13 @@
         android:id="@+id/mapView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        map:cameraZoom="18.5"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        map:cameraZoom="18.5" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -35,6 +37,7 @@
             android:layout_height="@dimen/button_level_width"
             android:layout_margin="@dimen/button_level_padding"
             android:background="@drawable/circle"
+            android:textColor="@color/blue_900"
             android:text="N1" />
 
         <Button
@@ -43,6 +46,7 @@
             android:layout_height="@dimen/button_level_width"
             android:layout_margin="@dimen/button_level_padding"
             android:background="@drawable/circle"
+            android:textColor="@color/blue_900"
             android:text="N2" />
 
         <Button
@@ -51,6 +55,7 @@
             android:layout_height="@dimen/button_level_width"
             android:layout_margin="@dimen/button_level_padding"
             android:background="@drawable/circle"
+            android:textColor="@color/blue_900"
             android:text="N3" />
     </LinearLayout>
 
@@ -65,5 +70,89 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.844" />
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="550dp"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:id="@+id/search_view_container"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.117">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout"
+            android:layout_width="220dp"
+            android:layout_height="114dp"
+            android:hint="Ubicación Actual"
+            android:textAlignment="center"
+            android:textColorHint="@color/blue_900"
+            app:hintAnimationEnabled="false"
+            app:hintEnabled="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0">
+
+            <AutoCompleteTextView
+                android:id="@+id/autoCompleteTextViewStart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/blue_100"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:padding="20dp"
+                android:textAlignment="center"
+                android:textColor="@color/blue_900" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="220dp"
+            android:layout_height="114dp"
+            android:hint="Ubicación destino"
+            android:textAlignment="center"
+            android:textColorHint="@color/blue_900"
+            app:hintAnimationEnabled="false"
+            app:hintEnabled="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/textInputLayout"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0">
+
+            <AutoCompleteTextView
+                android:id="@+id/autoCompleteTextViewEnd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/blue_100"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:padding="20dp"
+                android:textAlignment="center"
+                android:textColor="@color/blue_900" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ToggleButton
+        android:id="@+id/toggleButton"
+        android:layout_width="50dp"
+        android:layout_height="37dp"
+        android:checked="true"
+        android:textOff=" "
+        android:textOn=" "
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.019"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.652" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
