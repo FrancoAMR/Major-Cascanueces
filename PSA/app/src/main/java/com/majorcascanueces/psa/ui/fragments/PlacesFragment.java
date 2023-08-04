@@ -46,13 +46,17 @@ public class PlacesFragment extends Fragment {
 
     private List<Place> generateSamplePlaces() {
         List<Place> samplePlaces = new ArrayList<>();
-        samplePlaces.add(new Place(R.drawable.salones_100, "salones_100", "Salones 100"));
-        samplePlaces.add(new Place(R.drawable.salones_np_100, "salones_NP-100", "Salones NP-100"));
-        samplePlaces.add(new Place(R.drawable.laboratorio, "Laboratorio", "Laboratorio"));
-        samplePlaces.add(new Place(R.drawable.patio, "Patio", "Patio de la facultad"));
-        samplePlaces.add(new Place(R.drawable.canchita, "Canchita", "Canchita"));
-        samplePlaces.add(new Place(R.drawable.puerta_1, "Puerta 1", "Puerta 1"));
+        samplePlaces.add(new Place(R.drawable.salones_100, "Salones 100", "Descripción de los Salones 100"));
+        System.out.println("");
+        samplePlaces.add(new Place(R.drawable.salones_np_100, "Salones NP-100", "Descripción de los Salones NP-100"));
+        samplePlaces.add(new Place(R.drawable.laboratorio, "Laboratorio", "Descripción del Laboratorio"));
+        samplePlaces.add(new Place(R.drawable.patio, "Patio de la facultad", "Descripción del Patio de la facultad"));
+        samplePlaces.add(new Place(R.drawable.canchita, "Canchita", "Descripción de la Canchita"));
+        samplePlaces.add(new Place(R.drawable.puerta_1, "Puerta 1", "Descripción de la Puerta 1"));
+
+        // Agrega más lugares aquí si es necesario
 
         return samplePlaces;
     }
+
 }

@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="@color/white">
 
     <!-- Agrega aquí los elementos para descripción, ubicación, foto y otros datos -->
     <ImageView
@@ -13,24 +14,38 @@
         android:layout_height="100dp"
         android:src="@drawable/place_image"
         android:scaleType="centerCrop"
+        android:background="@color/black"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/placeDescriptionTextView"
         android:layout_marginEnd="8dp" />
 
     <TextView
-        android:id="@+id/placeDescriptionTextView"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/placeTitleTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Título del lugar"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toTopOf="@id/placeImageView"
+        app:layout_constraintStart_toEndOf="@id/placeImageView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/placeImageView"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp" />
 
+    <TextView
+        android:id="@+id/placeDescriptionTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Descripción del lugar"
         android:textSize="16sp"
-        tools:layout_editor_absoluteX="131dp"
-        tools:layout_editor_absoluteY="16dp" />
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/placeTitleTextView"
+        app:layout_constraintStart_toEndOf="@id/placeImageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
 
     <!-- Agrega otros elementos aquí -->
 
