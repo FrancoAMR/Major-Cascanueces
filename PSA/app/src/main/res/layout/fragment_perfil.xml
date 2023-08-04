@@ -46,12 +46,14 @@
             android:src="@drawable/profile_image" />
 
         <!-- Información del perfil -->
+
         <TextView
             android:id="@+id/emailTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Correo electrónico: "
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:textStyle="bold|italic" />
 
         <TextView
             android:id="@+id/nameTextView"
@@ -59,7 +61,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="Nombres: "
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:textStyle="bold|italic" />
 
     </LinearLayout>
 
