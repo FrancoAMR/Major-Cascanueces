@@ -27,7 +27,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.activities.AuthActivity">
+        <activity android:name=".ui.activities.AuthActivity"
+            android:theme="@style/Theme.PSA.NoActionBar">
         </activity>
 
         <activity android:name=".ui.activities.AppActivity"

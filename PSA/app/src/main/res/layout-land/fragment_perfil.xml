@@ -9,29 +9,27 @@
 
     <Button
         android:id="@+id/button_sign_out"
-        android:layout_width="262dp"
-        android:layout_height="43dp"
-        android:layout_marginBottom="108dp"
-        android:text="Cerrar sesión"
+        android:layout_width="187dp"
+        android:layout_height="52dp"
+        android:text="@string/button_sign_out"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.835"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.916" />
 
     <LinearLayout
         android:id="@+id/linearLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginBottom="156dp"
+        android:layout_width="400dp"
+        android:layout_height="match_parent"
         android:background="@android:color/white"
         android:orientation="vertical"
         android:padding="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/button_sign_out"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/profileImageView"
@@ -46,9 +44,9 @@
             android:id="@+id/emailTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:textAlignment="center"
             android:layout_gravity="center_horizontal"
+            android:textAlignment="center"
+            android:textSize="16sp"
             android:text="@string/org_local"
             android:textStyle="bold|italic" />
 
@@ -56,10 +54,10 @@
             android:id="@+id/nameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:textSize="16sp"
-            android:textAlignment="center"
             android:layout_gravity="center_horizontal"
+            android:layout_marginTop="8dp"
+            android:textAlignment="center"
+            android:textSize="16sp"
             android:text="@string/org_name"
             android:textStyle="bold|italic" />
 

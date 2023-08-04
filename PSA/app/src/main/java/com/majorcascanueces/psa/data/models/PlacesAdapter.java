@@ -33,10 +33,8 @@ public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.PlaceViewH
     public void onBindViewHolder(@NonNull PlaceViewHolder holder, int position) {
         Place place = placeList.get(position);
 
-        // Configura los datos en el ViewHolder
         holder.placeImageView.setImageResource(place.getImageResId());
         holder.placeDescriptionTextView.setText(place.getDescription());
-        // Configura otros datos aquí
     }
 
     @Override
@@ -47,13 +45,12 @@ public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.PlaceViewH
     class PlaceViewHolder extends RecyclerView.ViewHolder {
         ImageView placeImageView;
         TextView placeDescriptionTextView;
-        // Agrega otros elementos aquí
 
         public PlaceViewHolder(@NonNull View itemView) {
             super(itemView);
             placeImageView = itemView.findViewById(R.id.placeImageView);
             placeDescriptionTextView = itemView.findViewById(R.id.placeDescriptionTextView);
-            // Inicializa otros elementos aquí
+
         }
     }
 }

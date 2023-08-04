@@ -1,6 +1,7 @@
 package com.majorcascanueces.psa.ui.activities;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
@@ -55,16 +56,6 @@ public class AppActivity extends AppCompatActivity {
 
     private void initWidgetsActions() {
         setSupportActionBar(binding.appBarMain.toolbar);
-        binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Saliendo", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                as.signOut();
-                startActivity(new Intent(AppActivity.this, AuthActivity.class));
-                finish();
-            }
-        });
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
         // Passing each menu ID as a set of Ids because each
@@ -95,14 +86,18 @@ public class AppActivity extends AppCompatActivity {
         TextView email = hView.findViewById(R.id.textViewAddress);
         ImageView photo = hView.findViewById(R.id.imageViewUser);
         user = as.getCurrentUser();
-        username.setText(user.getDisplayName());
-        email.setText(user.getEmail());
-        if (user.getPhotoUrl() != null)
-            new LoadUrlImage(photo).execute(user.getPhotoUrl().toString());
+        if (user == null) return;
+
+        String name = user.getDisplayName();
+        if (name != null) username.setText(name.isEmpty()? "Fisi 2023" : name);
+
+        String em = user.getEmail();
+        if (em != null)  email.setText(em.isEmpty()? "Major_Cascanueces 2023": em);
+
+        Uri url = user.getPhotoUrl();
+        if (url != null)
+            new LoadUrlImage(photo).execute(url.toString());
         else
-            photo.setImageResource(R.mipmap.ic_launcher_round);
+            photo.setImageResource(R.drawable.user_default_photo);
     }
-
-
-
 }
