@@ -1,16 +1,12 @@
 package com.majorcascanueces.psa.data.repository;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -20,11 +16,9 @@ import com.google.android.gms.maps.model.GroundOverlayOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MapStyleOptions;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.Polygon;
-import com.google.android.gms.maps.model.PolygonOptions;
 
+import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.majorcascanueces.psa.R;
 import com.majorcascanueces.psa.data.models.GeoPoint;
@@ -34,7 +28,8 @@ import org.jgrapht.Graph;
 import org.jgrapht.GraphPath;
 import org.jgrapht.graph.DefaultWeightedEdge;
 
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MapRepositoryImpl implements MapRepository{
     private final GoogleMap googleMap;
@@ -42,18 +37,57 @@ public class MapRepositoryImpl implements MapRepository{
     private static final String cPref = "CameraPref";
     private static final String fPref = "FloorPref";
     private int current_floor = FLOOR_1;
-    private OnClickBuildingListener innerListener;
-    private Graph<GeoPoint, DefaultWeightedEdge> floor1_graph;
-
+    private Graph<GeoPoint, DefaultWeightedEdge> total_graph;
+    private List<MarkerOptions> markers_floor1;
+    private PolylineOptions polyline_floor1;
+    private PolylineOptions polyline_floor2;
+    private PolylineOptions polyline_floor3;
+    private GroundOverlayOptions image_floor1;
+    private GroundOverlayOptions image_floor2;
+    private GroundOverlayOptions image_floor3;
 
     public MapRepositoryImpl(@NonNull Context context,@NonNull GoogleMap map) {
         this.context = context;
         this.googleMap = map;
-        floor1_graph = GraphHelper.loadGraph(context.getResources().openRawResource(R.raw.floor1_graph));
+        markers_floor1 = new ArrayList<>();
+        setMapSettings();
+        loadContent();
+        setMapSavedInstance();
     }
 
-    @Override
-    public void setMapSettings() {
+    private void loadContent() {
+        total_graph = GraphHelper.loadGraph(context.getResources().openRawResource(R.raw.floor1_graph));
+        if (total_graph == null)
+            return;
+        for (GeoPoint gp : total_graph.vertexSet()) {
+            if (gp.label.startsWith("p"))
+                continue;
+            markers_floor1.add(new MarkerOptions()
+                    .position(new LatLng(gp.latitude, gp.longitude))
+                    .title(gp.label));
+        }
+        LatLngBounds imageBounds = new LatLngBounds(
+                new LatLng(-12.053675, -77.0866083333), //SW
+                new LatLng(-12.0524638889, -77.0843611111) //NE
+        );
+        image_floor1 = new GroundOverlayOptions()
+                .image(BitmapDescriptorFactory.fromResource(
+                        getFloorDrawable(FLOOR_1)))
+                .positionFromBounds(imageBounds);
+
+        image_floor2 = new GroundOverlayOptions()
+                .image(BitmapDescriptorFactory.fromResource(
+                        getFloorDrawable(FLOOR_2)))
+                .positionFromBounds(imageBounds);
+
+        image_floor3= new GroundOverlayOptions()
+                .image(BitmapDescriptorFactory.fromResource(
+                        getFloorDrawable(FLOOR_3)))
+                .positionFromBounds(imageBounds);
+
+    }
+
+    private void setMapSettings() {
         try {
             boolean success = googleMap.setMapStyle(
                     MapStyleOptions.loadRawResourceStyle(
@@ -64,6 +98,7 @@ public class MapRepositoryImpl implements MapRepository{
         } catch (Resources.NotFoundException e) {
             Log.e(this.getClass().toString(), "Can't find style. Error: ", e);
         }
+        googleMap.setBuildingsEnabled(false);
         LatLngBounds bounds = new LatLngBounds(
                 new LatLng(-12.053675, -77.0866083333), //SW
                 new LatLng(-12.0524638889, -77.0843611111) //NE
@@ -90,41 +125,12 @@ public class MapRepositoryImpl implements MapRepository{
         floorEditor.apply();
     }
 
-    private int getFloorDrawable(int floor) {
-        if (floor == FLOOR_1)
-            return R.drawable.piso1;
-        if (floor == FLOOR_2)
-            return R.drawable.piso2;
-        if (floor == FLOOR_3)
-            return R.drawable.piso3;
-        return R.drawable.piso1;
-    }
-
-    private void setObjects(int floor) {
-        googleMap.clear();
-        LatLngBounds imageBounds = new LatLngBounds(
-                new LatLng(-12.053675, -77.0866083333), //SW
-                new LatLng(-12.0524638889, -77.0843611111) //NE
-        );
-        GroundOverlayOptions groundOverlayOptions = new GroundOverlayOptions()
-                .image(BitmapDescriptorFactory.fromResource(
-                        getFloorDrawable(floor)))
-                .positionFromBounds(imageBounds);
-        googleMap.addGroundOverlay(groundOverlayOptions);
-
-        if (floor == FLOOR_1) {
-            showBuildingFloorOne();
-            showMarkersFloorOne();
-        }
-    }
-
-    @Override
     public void setMapSavedInstance() {
         SharedPreferences cameraPref = context.getSharedPreferences(cPref, Context.MODE_PRIVATE);
         SharedPreferences floorPref = context.getSharedPreferences(fPref,Context.MODE_PRIVATE);
-        googleMap.setBuildingsEnabled(false);
 
-        setObjects(floorPref.getInt("floor",FLOOR_1));
+        current_floor = floorPref.getInt("floor",FLOOR_1);
+        unHideObjects(current_floor);
 
         googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(
                 new CameraPosition.Builder()
@@ -140,11 +146,48 @@ public class MapRepositoryImpl implements MapRepository{
     public void setFloor(int to) {
         if (current_floor == to)
             return;
+        googleMap.clear();
         current_floor = to;
-        setObjects(current_floor);
+        unHideObjects(current_floor);
+    }
+
+    private int getFloorDrawable(int floor) {
+        if (floor == FLOOR_1)
+            return R.drawable.piso1;
+        if (floor == FLOOR_2)
+            return R.drawable.piso2;
+        if (floor == FLOOR_3)
+            return R.drawable.piso3;
+        return R.drawable.piso1;
+    }
+
+    private void unHideObjects(int floor) {
+        if (floor == FLOOR_1) {
+            //hideBuildingFloorOne();
+            if (image_floor1 != null) googleMap.addGroundOverlay(image_floor1);
+            for (MarkerOptions m: markers_floor1)
+                googleMap.addMarker(m);
+            if (polyline_floor1 != null) googleMap.addPolyline(polyline_floor1);
+        }
+        if (floor == FLOOR_2) {
+            //hideBuildingFloorOne();
+            if (image_floor2 != null) googleMap.addGroundOverlay(image_floor2);
+            //for (Marker m: markers_floor2)
+                //m.setVisible(false);
+            if (polyline_floor2 != null) googleMap.addPolyline(polyline_floor2);
+        }
+        if (floor == FLOOR_3) {
+            //hideBuildingFloorOne();
+            if (image_floor3 != null) googleMap.addGroundOverlay(image_floor3);
+            //for (Marker m: markers_floor3)
+                //m.setVisible(false);
+            if (polyline_floor3 != null) googleMap.addPolyline(polyline_floor3);
+        }
+
     }
 
     private void showBuildingFloorOne(){
+        /*
         PolygonOptions aulasPrimerPiso = new PolygonOptions()
                 .add(new LatLng(-12.0534875,-77.0856905))//Abajo Izquierda
                 .add(new LatLng(-12.0534298,-77.0852658))//Abajo Derecha
@@ -167,20 +210,9 @@ public class MapRepositoryImpl implements MapRepository{
                     polygon.setTag("alpha");
                 }
             }
-        });
+        });*/
     }
 
-    private void showMarkersFloorOne() {
-        if (floor1_graph == null)
-            return;
-        for (GeoPoint gp : floor1_graph.vertexSet()) {
-            if (gp.label.startsWith("p"))
-                continue;
-            googleMap.addMarker(new MarkerOptions()
-                    .position(new LatLng(gp.latitude,gp.longitude))
-                    .title(gp.label));
-        }
-    }
 
     public void doPath(String start, String end, OnPathListener listener) {
         if (start == null || end == null) {
@@ -191,28 +223,39 @@ public class MapRepositoryImpl implements MapRepository{
             listener.onFail("Ya se encuentra en el lugar de destino");
             return;
         }
-        if (!floor1_graph.vertexSet().contains(new GeoPoint(start)) ||
-             !floor1_graph.vertexSet().contains(new GeoPoint(end))) {
+        if (!total_graph.vertexSet().contains(new GeoPoint(start)) ||
+             !total_graph.vertexSet().contains(new GeoPoint(end))) {
             listener.onFail("Lamentablemente, no se encontraron lugares destacados con el nombre proporcionado.");
             return;
         }
-        doPath(GraphHelper.geoPoint(floor1_graph.vertexSet(),start),
-                GraphHelper.geoPoint(floor1_graph.vertexSet(),end));
+        DrawPath(GraphHelper.geoPoint(total_graph.vertexSet(),start),
+                GraphHelper.geoPoint(total_graph.vertexSet(),end));
     }
 
-    private void doPath(GeoPoint start, GeoPoint end) {
-        GraphPath<GeoPoint, DefaultWeightedEdge> path = GraphHelper.dijkstra(floor1_graph, start, end);
-        PolylineOptions po = new PolylineOptions();
+    private void DrawPath(GeoPoint start, GeoPoint end) {
+        GraphPath<GeoPoint, DefaultWeightedEdge> path = GraphHelper.dijkstra(total_graph, start, end);
+        PolylineOptions po1 = new PolylineOptions();
         for (GeoPoint gp : path.getVertexList()) {
-            po.add(new LatLng(gp.latitude,gp.longitude));
+            //if (gp.floor == FLOOR_1)
+            po1.add(new LatLng(gp.latitude,gp.longitude));
         }
-        po.width(8f)
-        .color(Color.BLUE);
-        googleMap.addPolyline(po);
+        po1.width(10f).color(Color.BLUE);
+        clearPaths();
+        polyline_floor1 = po1;
+        googleMap.addPolyline(po1).setVisible(current_floor == FLOOR_1);
+        /*polyline_floor2 = googleMap.addPolyline(po2);
+        polyline_floor2.setVisible(current_floor == FLOOR_2);
+        polyline_floor3 = googleMap.addPolyline(po3);
+        polyline_floor3.setVisible(current_floor == FLOOR_3);*/
+    }
+
+    private void clearPaths() {
+       polyline_floor1 = null;
+       polyline_floor2 = null;
+       polyline_floor3 = null;
     }
 
     public void setOnClickBuildingListener(OnClickBuildingListener listener) {
-        innerListener = listener;
     }
 
     public interface OnClickBuildingListener {

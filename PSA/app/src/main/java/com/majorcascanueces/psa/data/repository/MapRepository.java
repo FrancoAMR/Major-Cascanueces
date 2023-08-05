@@ -5,12 +5,8 @@ public interface MapRepository {
     int FLOOR_1 = 1;
     int FLOOR_2 = 2;
     int FLOOR_3 = 3;
-    void setMapSettings();
 
     void saveInstanceState();
-
-    void setMapSavedInstance();
-
     void setFloor(int to);
 
 }

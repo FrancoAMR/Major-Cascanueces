@@ -26,5 +26,6 @@
     <string name="action_credits">creditos</string>
     <string name="button_sign_out">Cerrar sesión</string>
     <string name="org_local">Fisi 2023</string>
+    <string name="menu_resena">Reseña</string>
 
 </resources>

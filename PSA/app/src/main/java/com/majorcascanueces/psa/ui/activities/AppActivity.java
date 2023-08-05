@@ -8,7 +8,6 @@ import android.view.Menu;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.navigation.NavController;
@@ -28,7 +27,6 @@ public class AppActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityAppBinding binding;
     private AuthServices as;
-    private FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +40,6 @@ public class AppActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
@@ -54,14 +51,13 @@ public class AppActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
+
     private void initWidgetsActions() {
         setSupportActionBar(binding.appBarMain.toolbar);
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_places, R.id.nav_profile, R.id.nav_map)
+                R.id.nav_places, R.id.nav_profile, R.id.nav_map, R.id.nav_review)
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
@@ -85,7 +81,7 @@ public class AppActivity extends AppCompatActivity {
         TextView username = hView.findViewById(R.id.textViewUsername);
         TextView email = hView.findViewById(R.id.textViewAddress);
         ImageView photo = hView.findViewById(R.id.imageViewUser);
-        user = as.getCurrentUser();
+        FirebaseUser user = as.getCurrentUser();
         if (user == null) return;
 
         String name = user.getDisplayName();

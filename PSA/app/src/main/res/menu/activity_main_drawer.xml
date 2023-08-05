@@ -19,7 +19,7 @@
         <item
             android:id="@+id/nav_review"
             android:icon="@drawable/ic_review"
-            android:title="Reseña" />
+            android:title="@string/menu_resena" />
     </group>
 
 </menu>
