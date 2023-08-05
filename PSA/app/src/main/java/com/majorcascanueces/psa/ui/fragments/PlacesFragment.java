@@ -46,13 +46,13 @@ public class PlacesFragment extends Fragment {
 
     private List<Place> generateSamplePlaces() {
         List<Place> samplePlaces = new ArrayList<>();
-        samplePlaces.add(new Place(R.drawable.salones_100, "Salones 100", "Descripción de los Salones 100"));
+        samplePlaces.add(new Place(R.drawable.salones_100, "Salones 100", "Salones con capacidad promedio de 50 alumnos, aquí se dictan la teoría de los cursos."));
         System.out.println("");
-        samplePlaces.add(new Place(R.drawable.salones_np_100, "Salones NP-100", "Descripción de los Salones NP-100"));
-        samplePlaces.add(new Place(R.drawable.laboratorio, "Laboratorio", "Descripción del Laboratorio"));
-        samplePlaces.add(new Place(R.drawable.patio, "Patio de la facultad", "Descripción del Patio de la facultad"));
-        samplePlaces.add(new Place(R.drawable.canchita, "Canchita", "Descripción de la Canchita"));
-        samplePlaces.add(new Place(R.drawable.puerta_1, "Puerta 1", "Descripción de la Puerta 1"));
+        samplePlaces.add(new Place(R.drawable.salones_np_100, "Salones NP-100", "Nuevos salones con capacidad promedio de 50 personas, aquí se dictan la teoría de los cursos."));
+        samplePlaces.add(new Place(R.drawable.laboratorio, "Laboratorio", "Lugar donde se encuentran las computadoras y se realizan las prácticas."));
+        samplePlaces.add(new Place(R.drawable.patio, "Patio de la facultad", "Sitio al aire libre, ideal para comer o relajarse un poco."));
+        samplePlaces.add(new Place(R.drawable.canchita, "Campo de fútbol", "Cancha de grass sintético para jugar fútbol."));
+        samplePlaces.add(new Place(R.drawable.puerta_1, "Puerta 1", "Puerta principal de la FISI."));
 
         // Agrega más lugares aquí si es necesario
 

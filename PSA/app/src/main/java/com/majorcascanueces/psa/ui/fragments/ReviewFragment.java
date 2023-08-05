@@ -24,8 +24,15 @@ public class ReviewFragment extends Fragment {
         reviewsLinearLayout = root.findViewById(R.id.reviewsLinearLayout);
 
         // Agrega reseñas de ejemplo
-        addReview("Evento 1", "Descripción del evento 1", R.drawable.circle);
-        addReview("Evento 2", "Descripción del evento 2", R.drawable.google_logo);
+        addReview("Patio de la facultad", "Uno de los lugares más inolvidables de la FISI." +
+                        "Este sitio alberga los recuerdos de las ginkanas y las fiestas de fin de ciclo." +
+                        "También es el patio de juegos de nuestro gato favorito Tesla, el cual esta absolutamnete " +
+                        "prohibido darle de comer.", R.drawable.tesla);
+        addReview("Campo de fútbol", "Sitio ideal para los amantes del fútbol. Se guarda númerosos pichangas, torneos " +
+                "y su respectiva rehidratación al final del campeonato.", R.drawable.futbol);
+        addReview("Puerta 1", "El sitio que para muchos pasa desapercibido, pero que realmente es el más importante"
+                +" Aquí es el primer vistazo a nuestra escuela, el primer paso hacia un futuro prometedor y"  +
+                " una última foto con increíbles recuerdos.", R.drawable.entrada1);
 
         return root;
     }
