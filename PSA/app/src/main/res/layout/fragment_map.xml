@@ -27,7 +27,7 @@
         app:layout_constraintHorizontal_bias="1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.70">
+        app:layout_constraintVertical_bias="0.75">
 
         <Button
             android:id="@+id/button_level1"
@@ -139,16 +139,17 @@
 
     <ToggleButton
         android:id="@+id/toggleButton"
-        android:layout_width="54dp"
-        android:layout_height="37dp"
+        android:layout_width="45dp"
+        android:layout_height="29dp"
+        android:background="@drawable/toggle_button_potrait"
+        android:checked="false"
         android:textOff=" "
         android:textOn=" "
-        android:checked="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.955"
+        app:layout_constraintHorizontal_bias="0.95"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.137" />
+        app:layout_constraintVertical_bias="0.125" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

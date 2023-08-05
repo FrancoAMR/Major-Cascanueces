@@ -94,8 +94,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                     });
             }
         });
-
         Transition transition = new Fade();
+
+        TransitionManager.beginDelayedTransition(binding.getRoot(), transition);
+        binding.searchViewContainer.setVisibility(
+                binding.toggleButton.isChecked()? View.VISIBLE:View.GONE
+        );
+
         binding.toggleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
