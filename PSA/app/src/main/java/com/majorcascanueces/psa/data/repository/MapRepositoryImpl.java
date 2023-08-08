@@ -46,6 +46,8 @@ public class MapRepositoryImpl implements MapRepository{
     private GroundOverlayOptions image_floor2;
     private GroundOverlayOptions image_floor3;
 
+    private Polyline poly_1;
+
     public MapRepositoryImpl(@NonNull Context context,@NonNull GoogleMap map) {
         this.context = context;
         this.googleMap = map;
@@ -242,7 +244,8 @@ public class MapRepositoryImpl implements MapRepository{
         po1.width(10f).color(Color.BLUE);
         clearPaths();
         polyline_floor1 = po1;
-        googleMap.addPolyline(po1).setVisible(current_floor == FLOOR_1);
+        poly_1 = googleMap.addPolyline(po1);
+        poly_1.setVisible(current_floor == FLOOR_1);
         /*polyline_floor2 = googleMap.addPolyline(po2);
         polyline_floor2.setVisible(current_floor == FLOOR_2);
         polyline_floor3 = googleMap.addPolyline(po3);
@@ -250,6 +253,7 @@ public class MapRepositoryImpl implements MapRepository{
     }
 
     private void clearPaths() {
+        if(poly_1 != null) poly_1.remove();
        polyline_floor1 = null;
        polyline_floor2 = null;
        polyline_floor3 = null;
